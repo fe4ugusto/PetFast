@@ -1,0 +1,26 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - mvn clean compile
+
+test-job:
+  stage: test
+  script:
+    - mvn test
+  artifacts:
+    paths:
+      - target/surefire-reports/*.xml
+    reports:
+      junit: target/surefire-reports/*.xml
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Simulação de deploy na branch main"
+  only:
+    - main
